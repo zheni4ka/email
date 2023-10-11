@@ -38,7 +38,7 @@ namespace WpfApp2
             mail = new MailMessage(myMailAddress, toTxtBox.Text)
             {
                 Subject = subjectTxtBox.Text,
-                Body = $"<h1>My Mail Message from C#</h1><p>{bodyTxtBox.Text}</p>",
+                Body = $"{bodyTxtBox.Text}",
                 IsBodyHtml = true,
                 Priority = MailPriority.Normal
             };
@@ -67,6 +67,18 @@ namespace WpfApp2
                 mail.Priority = MailPriority.High;
             }
             else mail.Priority = MailPriority.Normal;
+        }
+
+        private void Menu_Selected(object sender, RoutedEventArgs e)
+        {
+            if (Menu.Items.OfType<ComboBoxItem>().Where(x => x.Name == "ShowMailBoxMenu").First().IsSelected == true)
+            {
+                ShowMailBox.Navigate(new Page1());
+            }
+            else
+            {
+                ShowMailBox.Navigate(this);
+            }
         }
     }
 }
