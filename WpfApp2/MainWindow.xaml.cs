@@ -20,8 +20,10 @@ namespace WpfApp2
     /// </summary>
     public partial class MainWindow : Window
     {
-        public string myMailAddress { get; } = "tmvlad33@gmail.com";
-        public string accountPassword { get; } = "gxknljmktrlthlyx";
+        public string myMailAddress { get; } = "ebranik15@gmail.com";
+        public string accountPassword { get; } = "pzte vuyf pvuh jhii";
+
+        
         public MainWindow()
         {
             InitializeComponent();

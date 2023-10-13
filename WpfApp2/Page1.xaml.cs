@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MailKit.Net.Imap;
+using MailKit.Security;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,11 +22,24 @@ namespace WpfApp2
     /// </summary>
     public partial class Page1 : Page
     {
-        public string myMailAddress { get; } = "tmvlad33@gmail.com";
-        public string accountPassword { get; } = "gxknljmktrlthlyx";
+        public string myMailAddress { get; } = "ebranik15@gmail.com";
+        public string accountPassword { get; } = "pzte vuyf pvuh jhii";
+
+        private ImapClient client = new();
+
+        List<string> folders = new();
+
         public Page1()
         {
             InitializeComponent();
+            
+            client.Connect("imap.gmail.com", 993, SecureSocketOptions.SslOnConnect);
+
+            client.Authenticate(myMailAddress, accountPassword);
+
+            folders = client.GetFolders(client.PersonalNamespaces.First()).Select(x => x.Name).ToList();
+
+            ListFolders.ItemsSource = folders;
         }
     }
 }

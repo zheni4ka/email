@@ -14,6 +14,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using MailKit;
+using MailKit.Net.Imap;
 
 namespace WpfApp2
 {
@@ -22,62 +24,36 @@ namespace WpfApp2
     /// </summary>
     public partial class Window1 : Page
     {
-        public string myMailAddress { get; } = "tmvlad33@gmail.com";
-        public string accountPassword { get; } = "gxknljmktrlthlyx";
+        public string myMailAddress { get; } = "ebranik15@gmail.com";
+        public string accountPassword { get; } = "pzte vuyf pvuh jhii";
         
         MailMessage mail = new();
-        
+
+        public SendMessage sendMessagePage { get; set; } = new SendMessage();
+        public Page1 page1 { get; set; } = new Page1();
+
+        private ImapClient client = new();
+
+
         public Window1()
         {
             InitializeComponent();
-            
+
+            client.Connect("imap.gmail.com", 993, MailKit.Security.SecureSocketOptions.SslOnConnect);
+
+            client.Authenticate(myMailAddress, accountPassword);
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            mail = new MailMessage(myMailAddress, toTxtBox.Text)
-            {
-                Subject = subjectTxtBox.Text,
-                Body = $"{bodyTxtBox.Text}",
-                IsBodyHtml = true,
-                Priority = MailPriority.Normal
-            };
-
-            SmtpClient client = new SmtpClient("smtp.gmail.com", 587)
-            {
-                Credentials = new NetworkCredential(myMailAddress, accountPassword),
-                EnableSsl = true
-            };
-
-            client.Send(mail);
-
-        }
-
-        private void AddAttachments_Click(object sender, RoutedEventArgs e)
-        {
-            OpenFileDialog dialog = new OpenFileDialog();
-            if (dialog.ShowDialog() == true)
-                mail.Attachments.Add(new Attachment(dialog.FileName));
-        }
-
-        private void isImportant_Checked(object sender, RoutedEventArgs e)
-        {
-            if (isImportant.IsChecked == true)
-            {
-                mail.Priority = MailPriority.High;
-            }
-            else mail.Priority = MailPriority.Normal;
-        }
-
+        
         private void Menu_Selected(object sender, RoutedEventArgs e)
         {
             if (Menu.Items.OfType<ComboBoxItem>().Where(x => x.Name == "ShowMailBoxMenu").First().IsSelected == true)
             {
-                ShowMailBox.Navigate(new Page1());
+                PageNav.Navigate(sendMessagePage);
             }
             else
             {
-                ShowMailBox.Navigate(this);
+                PageNav.Navigate(page1);
             }
         }
     }

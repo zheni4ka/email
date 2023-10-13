@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp2"
         mc:Ignorable="d"
-        Title="Login Window" Height="450" Width="800">
+        Title="Login Window" Height="450" Width="800"
+        SelectiveScrollingGrid.SelectiveScrollingOrientation="None">
     <Grid>
         <Border Background="Gray" Height="185" Width="270" CornerRadius="5">
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Height="185">
@@ -27,6 +28,6 @@
 
         </StackPanel>
     </Border>
-        <Frame Grid.Row="1" x:Name="_mainFrame"/>
+        <Frame Grid.Row="1" x:Name="_mainFrame" NavigationUIVisibility="Hidden"/>
     </Grid>
 </Window>
